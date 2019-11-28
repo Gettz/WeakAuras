@@ -2,7 +2,7 @@ function()
     local name, rank, icon, powerCost, isFunnel, powerType, castingTime, minRange, maxRange = GetSpellInfo("execute")
     local rage = UnitPower("player", 1)
         if powerCost then
-            maxval = math.max(powerCost + rage, 30)
+            maxval = math.min(powerCost + rage, 30)
             return string.format(maxval)
         else
             return 0
