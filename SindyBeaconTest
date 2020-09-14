@@ -1,0 +1,10 @@
+function()
+	for i = 1, GetRealNumRaidMembers() do
+		if GetUnitName("raid"..i.."target") == "Sindragosa" then
+			aura_env.bosshp = math.ceil(UnitHealth("raid"..i.."target") / UnitHealthMax("raid"..i.."target"))
+		end
+	end
+	if aura_env.bosshp >= 0.35 then
+		return true
+	end
+end
