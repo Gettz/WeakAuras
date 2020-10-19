@@ -1,10 +1,61 @@
 function()
-	for i = 1, GetRealNumRaidMembers() do
-		if GetUnitName("raid"..i.."target") == "Sindragosa" then
-			aura_env.bosshp = math.ceil(UnitHealth("raid"..i.."target") / UnitHealthMax("raid"..i.."target"))
-		end
-	end
-	if aura_env.bosshp >= 0.35 then
-		return true
+    for i = 1, GetRealNumRaidMembers() do
+        if GetUnitName("raid"..i.."target") == "Sindragosa" then
+            aura_env.bosshp = math.ceil(UnitHealth("raid"..i.."target") / UnitHealthMax("raid"..i.."target"))
+        end
+        if(UnitDebuff("raid"..i, "Frost Beacon")) then
+            aura_env.BeaconTargets[aura_env.totalBeacons] = "raid"..i
+            aura_env.totalBeacons = aura_env.totalBeacons + 1
+        end
+    end
+    if aura_env.bosshp >= 0.35 then
+        if aura_env.totalBeacons == 1 then
+        --beacon0left beacon1right
+          if ( UnitIsUnit(aura_env.BeaconTargets[0], "player") ) then
+            return "Left Stack!"
+          end
+          if ( UnitIsUnit(aura_env.BeaconTargets[1], "player") ) then
+            return "Right Stack!"
+          end
+        end
+        if aura_env.totalBeacons == 4 then
+        --beacon0,1 left, 2 middle, 3,4 right
+          if ( UnitIsUnit(aura_env.BeaconTargets[0], "player") ) then
+            return "Left Stack!"
+          end
+          if ( UnitIsUnit(aura_env.BeaconTargets[1], "player") ) then
+            return "Left Stack!"
+          end
+	  if ( UnitIsUnit(aura_env.BeaconTargets[2], "player") ) then
+            return "Middle Stack!"
+          end
+	  if ( UnitIsUnit(aura_env.BeaconTargets[3], "player") ) then
+            return "Right Stack!"
+          end
+	  if ( UnitIsUnit(aura_env.BeaconTargets[4], "player") ) then
+            return "Right Stack!"
+          end
+        end
+	if aura_env.totalBeacons == 5 then
+        --beacon0,1 left, 2,3 middle, 4,5 right
+          if ( UnitIsUnit(aura_env.BeaconTargets[0], "player") ) then
+            return "Left Stack!"
+          end
+          if ( UnitIsUnit(aura_env.BeaconTargets[1], "player") ) then
+            return "Left Stack!"
+          end
+	  if ( UnitIsUnit(aura_env.BeaconTargets[2], "player") ) then
+            return "Middle Stack!"
+          end
+	  if ( UnitIsUnit(aura_env.BeaconTargets[3], "player") ) then
+            return "Middle Stack!"
+          end
+	  if ( UnitIsUnit(aura_env.BeaconTargets[4], "player") ) then
+            return "Right Stack!"
+          end
+	  if ( UnitIsUnit(aura_env.BeaconTargets[5], "player") ) then
+            return "Right Stack!"
+          end
+        end
 	end
 end
